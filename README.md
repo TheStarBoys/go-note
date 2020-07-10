@@ -1,5 +1,16 @@
 # go-note
-Go学习笔记 + 资料收集。
+
+是 Go 笔记，同时也是资料整理，它包括但不限于以下内容：
+
+- Go 相关比较成体系的书籍
+- Go 项目发现
+- Go 笔记
+- Go 社区
+- Go 资料索引
+- Go 生态中的常用项目及解决方案
+- Go 项目练习 Demo
+- Go 开发中一些常见的问题
+- 其他与 Go 无关，但开发需要掌握的技能
 
 
 
@@ -23,6 +34,8 @@ Go学习笔记 + 资料收集。
   - [xmge/gonote](https://github.com/xmge/gonote/tree/master/go%E9%9D%A2%E8%AF%95%E9%A2%98)
   - [lifei6671/interview-go](https://github.com/lifei6671/interview-go)
   - [Awesome Job](https://github.com/Dikea/awesome-job)
+- [Go 语言常见问题解决方案](./book/go_problem/go_problem.md)
+- [Go 开发中最常用的开源项目](./book/project)
 
 
 
