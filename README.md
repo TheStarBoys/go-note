@@ -89,6 +89,8 @@
   - [正则测试平台](https://regexr.com/)
   - [正则速查表](https://www.jb51.net/tools/regexsc.htm)
 - [Shell在线测试平台](http://www.dooccn.com/shell/)
+- Linux
+  - [Linux 命令搜索引擎](https://wangchujiang.com/linux-command/)
 - Redis
   - [Redis在线练习-国外](http://try.redis.io/)
   - [Redis在线练习-国内](https://www.freeaihub.com/redis/setup.html)

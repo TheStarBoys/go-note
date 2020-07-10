@@ -33,11 +33,11 @@
 
 ## 快速开始
 
-以 Windows 为例：
+以 **Windows** 为例：
 
-第一步：下载并解压缩 kafka
+### 第一步：下载并解压缩 kafka
 
-第二步：启动服务器
+### 第二步：启动服务器
 
 1. 启动 Zookeeper 服务器：
 
@@ -64,9 +64,41 @@ $ ./bin/windows/kafka-server-start.bat config/server.properties
 set COMMAND=%JAVA% %KAFKA_HEAP_OPTS% %KAFKA_JVM_PERFORMANCE_OPTS% %KAFKA_JMX_OPTS% %KAFKA_LOG4J_OPTS% -cp "%CLASSPATH%" %KAFKA_OPTS% %*
 ```
 
-第一步：下载第三方库
+### 第三步：使用 kafka
+
+**创建 topic**
+
+让我们创建一个名为“test”的topic，它有一个分区和一个副本： 
+
+```bash
+$ ./bin/windows/kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+```
+
+**发送消息到 topic**
+
+运行 producer，然后在控制台输入一些消息以发送到服务器。 
+
+```bash
+$ ./bin/windows/kafka-console-producer.bat --broker-list localhost:9092 --topic test
+> This is a message
+> This is another message
+```
+
+**启动一个 consumer**
+
+```bash
+$ ./bin/windows/kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test --from-beginning
+This is a message
+This is another message
+```
+
+### 第四步：下载第三方库
 
 ```
 $ go get github.com/Shopify/sarama
 ```
+
+第六步：通过第三方库使用 kafka
+
+[Code](./main.go)
 
