@@ -9,7 +9,7 @@ var (
 	client sarama.SyncProducer
 )
 
-func InitKafka(addr string) {
+func InitKafka(addr string) error {
 	var err error
 	config := sarama.NewConfig()
 	// 设置 kafka 回不回ack，如果不回，可能会被传丢
@@ -19,13 +19,14 @@ func InitKafka(addr string) {
 	config.Producer.Return.Successes = true
 
 	// 同步的客户端
-	client, err = sarama.NewSyncProducer([]string{"localhost:9092"}, config)
+	client, err = sarama.NewSyncProducer([]string{addr}, config)
 	if err != nil {
 		logs.Warn("init kafka producer failed, err:", err)
-		return
+		return err
 	}
 
 	logs.Debug("init kafka success")
+	return nil
 }
 
 func Send(data, topic string) error {
@@ -39,6 +40,6 @@ func Send(data, topic string) error {
 		logs.Error("send message failed, err:", err)
 		return err
 	}
-	logs.Debug("send to kafka succ, partition_id: %d, offset: %d", pid, offset)
+	logs.Debug("send to kafka succ, partition_id: %d, offset: %d, topic: %s", pid, offset, topic)
 	return nil
 }

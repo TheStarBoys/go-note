@@ -1,8 +1,8 @@
 package conf
 
 import (
-	"github.com/astaxie/beego/config"
 	"fmt"
+	"github.com/astaxie/beego/config"
 	"os"
 	"path"
 )
@@ -15,6 +15,7 @@ var (
 func init() {
 	dir, _ := os.Getwd()
 	currWd = path.Join(dir, "practice/demo/log_collection")
+	fmt.Printf(">>> find work directory: %s\n", dir)
 }
 
 type Config struct {
@@ -22,12 +23,14 @@ type Config struct {
 	LogPath     string
 	ChanSize 	int
 	KafkaAddr   string
+	EtcdAddr    string
+	EtcdKey     string
 	CollectConf []CollectConf
 }
 
 type CollectConf struct {
-	LogPath string
-	Topic   string
+	LogPath string `json:"log_path"`
+	Topic   string `json:"topic"`
 }
 
 func GetConfig() *Config {
@@ -65,6 +68,16 @@ func LoadConf(confType, filename string) {
 		appConfig.ChanSize = 100
 	}
 
+	appConfig.EtcdAddr = conf.String("etcd::addr")
+	if len(appConfig.EtcdAddr) == 0 {
+		panic("invalid etcd addr")
+	}
+
+	appConfig.EtcdKey = conf.String("etcd::configKey")
+	if len(appConfig.EtcdKey) == 0 {
+		panic("invalid etcd key")
+	}
+
 	loadCollectionConf(conf)
 
 	return
@@ -82,6 +95,6 @@ func loadCollectionConf(conf config.Configer) {
 	if len(cc.Topic) == 0 {
 		panic(fmt.Sprintf("invalid collection::Topic"))
 	}
-
+	fmt.Printf(">>> load collectionConf: %#v\n", cc)
 	appConfig.CollectConf = append(appConfig.CollectConf, cc)
 }

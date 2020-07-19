@@ -46,6 +46,8 @@
 - [the-way-to-go](https://github.com/unknwon/the-way-to-go_ZH_CN)
 - [深入解析Go](https://github.com/tiancaiamao/go-internals)
 - [Golang - 100天从新手到大师](https://github.com/rubyhan1314/Golang-100-Days)
+- [玩转Go](https://github.com/hantmac/Mastering_Go_ZH_CN)
+- [GO专家编程](https://github.com/RainbowMango/GoExpertProgramming)
 
 
 

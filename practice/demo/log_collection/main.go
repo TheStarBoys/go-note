@@ -1,11 +1,11 @@
 package main
 
 import (
-	"path"
-	"github.com/astaxie/beego/logs"
 	"github.com/TheStarBoys/go-note/practice/demo/log_collection/conf"
-	"github.com/TheStarBoys/go-note/practice/demo/log_collection/tailf"
 	"github.com/TheStarBoys/go-note/practice/demo/log_collection/kafka"
+	"github.com/TheStarBoys/go-note/practice/demo/log_collection/tailf"
+	"github.com/astaxie/beego/logs"
+	"path"
 )
 
 func main() {
@@ -15,9 +15,25 @@ func main() {
 	initLogger()
 	logs.Debug("load conf success, config: %#v", conf.GetConfig())
 
-	tailf.InitTail(conf.GetConfig().CollectConf, conf.GetConfig().ChanSize)
+	initEtcd(conf.GetConfig().EtcdAddr, conf.GetConfig().EtcdKey)
+	collectConf, err := GetEtcdLogConf(conf.GetConfig().EtcdKey)
+	if err != nil {
+		return
+	}
 
-	kafka.InitKafka(conf.GetConfig().KafkaAddr)
+	//tailf.InitTail(collectConf, conf.GetConfig().ChanSize)
+	conf.GetConfig().CollectConf = collectConf
+	err = tailf.InitTail(conf.GetConfig().CollectConf, conf.GetConfig().ChanSize)
+	if err != nil {
+		logs.Error("init tailf err: %v", err)
+		return
+	}
+
+	err = kafka.InitKafka(conf.GetConfig().KafkaAddr)
+	if err != nil {
+		logs.Error("init kafka err: %v", err)
+		return
+	}
 
 	logs.Debug("initialize success")
 
@@ -32,7 +48,7 @@ func main() {
 
 	Run()
 
-	logs.Info("program exist")
+	logs.Info("program exited")
 }
 
 func Run() {
